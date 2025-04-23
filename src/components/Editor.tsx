@@ -5,17 +5,25 @@ import "suneditor/dist/css/suneditor.min.css";
 interface Props {
   value?: string;
   onChange: (content: string) => void;
+  onImageUploadBefore?: (
+    files: File[],
+    info: object,
+    uploadHandler: (data: { result?: any[]; errorMessage?: string }) => void
+  ) => boolean | Promise<boolean>;
 }
 
-const Editor = ({ value = "", onChange }: Props) => {
+const Editor = ({ value = "", onChange, onImageUploadBefore }: Props) => {
   return (
     <SunEditor
-      defaultValue={value} // ✅ 초기값은 오직 여기서만!
+      defaultValue={value}
       onChange={onChange}
+      onImageUploadBefore={onImageUploadBefore}
       setOptions={{
         height: "auto",
         minHeight: "300px",
-        iframe: false, // ✅ iframe 에러 방지
+        iframe: false,
+        imageUploadUrl: undefined, // ⛔ 기본 업로드 방식 비활성화
+        imageUploadHeader: undefined,
         buttonList: [
           ["undo", "redo"],
           ["font", "fontSize", "formatBlock"],

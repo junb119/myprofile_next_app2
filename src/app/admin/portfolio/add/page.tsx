@@ -10,6 +10,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import Loader from "@/components/Loader";
 
 const AddPortfolio = () => {
   const {
@@ -29,15 +31,19 @@ const AddPortfolio = () => {
     const file = data.thumb?.[0];
     // const filename = await getFilename(file, "/api/upload/icon");
     const fileData = new FormData();
+    const publicId = uuidv4();
     fileData.append("file", file);
     fileData.append("subPath", "portfolio/thumb");
-    const {
-      data: { filename },
-    } = await axios.post("/api/uploadFile", fileData);
-
-    data.thumb = `/upload/portfolio/thumb/${filename}`;
+    fileData.append("publicId", publicId);
     try {
-      const res = await axios.post("/api/portfolio/add", data);
+      const {
+        data: { secure_url },
+      } = await axios.post("/api/uploadFile", fileData);
+
+      const res = await axios.post("/api/portfolio/add", {
+        ...data,
+        thumb: secure_url,
+      });
       console.log("Portfolio 등록 성공", res.data);
       alert("Portfolio 등록 성공");
       router.push("/portfolio");
@@ -46,8 +52,50 @@ const AddPortfolio = () => {
       alert("Portfolio 등록 실패!");
     }
   };
+  // 페이지 상단에 추가
+  const handleEditorImageUpload = async (files, info, uploadHandler) => {
+    const file = files[0];
 
-  if (loading) return <p>loading...</p>;
+    // 용량 제한 (예: 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      uploadHandler({
+        errorMessage: "10MB 이상 파일은 업로드할 수 없습니다.",
+      });
+      return false; // 삽입 막기
+    }
+
+    const formData = new FormData();
+    const publicId = `portfolio/detail/misc/${uuidv4()}`;
+    formData.append("file", file);
+    formData.append("subPath", "portfolio/detail");
+    formData.append("publicId", publicId);
+
+    try {
+      const {
+        data: { secure_url },
+      } = await axios.post("/api/uploadFile", formData);
+
+      uploadHandler({
+        result: [
+          {
+            url: secure_url,
+            name: file.name,
+            size: file.size,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("에디터 이미지 업로드 실패", error);
+      uploadHandler({
+        errorMessage: "이미지 업로드 실패. 용량 또는 네트워크를 확인해주세요.",
+      });
+      return false; // base64 삽입 방지
+    }
+
+    return false; // 기본 삽입도 차단
+  };
+
+  if (loading) return <Loader />;
   return (
     <div>
       <form onSubmit={handleSubmit(handleAddSubmit)}>
@@ -104,6 +152,8 @@ const AddPortfolio = () => {
           register={register}
           errors={errors}
           preview
+          setValue={setValue}
+          watch={watch}
         />
         <InputText
           id="github"
@@ -117,7 +167,11 @@ const AddPortfolio = () => {
           register={register}
           errors={errors}
         />
-        <Editor onChange={(html) => setValue("detail", html)} />
+        <Editor
+          value={watch("detail")}
+          onChange={(html) => setValue("detail", html)}
+          onImageUploadBefore={handleEditorImageUpload}
+        />
 
         <button
           type="submit"

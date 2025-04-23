@@ -8,6 +8,8 @@ import InputImage from "@/components/InputImage";
 import { AboutMe } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Textarea from "@/components/Textarea";
+import Loader from "@/components/Loader";
 
 interface AboutMeFormValues {
   id: string;
@@ -64,17 +66,24 @@ export default function EditAbout() {
   }, [reset]);
 
   const onSubmit = async (formData: AboutMeFormValues) => {
-    const file = formData.image?.[0];
-    // const filename = await getFilename(file, "/api/upload/icon");
-    const fileData = new FormData();
-    fileData.append("file", file);
-    fileData.append("subPath", "about/profile");
     try {
-      const {
-        data: { filename },
-      } = await axios.post("/api/uploadFile", fileData);
+      const file = formData.image?.[0];
 
-      formData.image = `/upload/about/profile/${filename}`;
+      if (file instanceof File) {
+        // ✅ 새 파일이 업로드된 경우에만 업로드 API 요청
+        const fileData = new FormData();
+        fileData.append("file", file);
+        fileData.append("subPath", "about/profile");
+        fileData.append("publicId", formData.id);
+
+        const {
+          data: { secure_url },
+        } = await axios.post("/api/uploadFile", fileData);
+
+        console.log("secure_url", secure_url);
+        formData.image = secure_url;
+        console.log("formData.image", formData.image);
+      }
 
       const res = await axios.patch("/api/about/", formData);
       console.log("about 업데이트 성공", res.data);
@@ -85,7 +94,7 @@ export default function EditAbout() {
       alert("about 편집 실패!");
     }
   };
-  if (!loaded) return <div className="text-center py-10">loading...</div>;
+  if (!loaded) return <Loader />;
 
   return (
     <form
@@ -99,7 +108,10 @@ export default function EditAbout() {
         label="프로필 이미지"
         register={register}
         errors={errors}
+        defaultImageUrl={getValues("image")}
         preview
+        setValue={setValue}
+        watch={watch}
       />
 
       <InputText
@@ -128,7 +140,7 @@ export default function EditAbout() {
         register={register}
         errors={errors}
       />
-      <InputText id="bio" label="소개글" register={register} errors={errors} />
+      <Textarea id="bio" label="소개글" register={register} errors={errors} />
 
       <InputList
         id="skills"

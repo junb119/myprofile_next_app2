@@ -11,7 +11,7 @@ interface TextareaFieldProps {
   rows?: number;
 }
 
-const TextareaField = ({
+const Textarea = ({
   id,
   label,
   register,
@@ -39,4 +39,4 @@ const TextareaField = ({
   );
 };
 
-export default TextareaField;
+export default Textarea;

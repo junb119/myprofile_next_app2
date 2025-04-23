@@ -56,7 +56,9 @@ export default function Home() {
               {aboutData.name}
             </h2>
             <p className="text-sm text-zinc-500">{aboutData.tagline}</p>
-            <p className="mt-2 leading-relaxed">{aboutData.bio}</p>
+            <p className="mt-2 leading-relaxed whitespace-pre-line">
+              {aboutData.bio}
+            </p>
           </div>
 
           {/* 역할 태그 */}

@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+// next.config.ts
+const NextConfig = {
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
 };
 
-export default nextConfig;
+export default NextConfig;

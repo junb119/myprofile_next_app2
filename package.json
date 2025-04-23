@@ -13,6 +13,7 @@
     "@ckeditor/ckeditor5-horizontal-line": "^45.0.0",
     "@ckeditor/ckeditor5-react": "^9.5.0",
     "axios": "^1.8.4",
+    "cloudinary": "^2.6.0",
     "framer-motion": "^12.7.3",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
@@ -21,7 +22,8 @@
     "react-hook-form": "^7.54.2",
     "suneditor": "^2.47.5",
     "suneditor-react": "^3.6.1",
-    "swr": "^2.3.3"
+    "swr": "^2.3.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

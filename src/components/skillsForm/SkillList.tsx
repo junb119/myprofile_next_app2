@@ -181,8 +181,8 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const getLevelText = (level: number) => {
-  if (level >= 7) return "🔥 자신 있어요";
-  if (level >= 5) return "✨ 익숙해요";
+  if (level >= 9) return "🔥 자신 있어요";
+  if (level >= 6) return "✨ 익숙해요";
   if (level >= 3) return "💡 기본이에요";
   return "🐣 써봤어요";
 };

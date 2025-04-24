@@ -35,17 +35,13 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
         </button>
 
         {/* 섬네일 */}
-        <div className="relative w-full h-64 md:h-80 rounded-t-xl">
-          <div className="absolute inset-0 p-4">
-            <div className="relative w-full h-full">
-              <Image
-                src={portfolio.thumb}
-                alt="thumbnail"
-                fill
-                className="object-cover rounded-xl"
-              />
-            </div>
-          </div>
+        <div className="relative w-full aspect-[16/9] bg-black rounded-t-xl">
+          <Image
+            src={portfolio.thumb}
+            alt="thumbnail"
+            fill
+            className="object-contain rounded-t-xl"
+          />
         </div>
 
         {/* 본문 */}
@@ -107,7 +103,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
 
           {/* 상세 설명 HTML */}
           <div
-            className="prose max-w-none prose-zinc border-t border-zinc-700 pt-10"
+            className="prose max-w-none prose-zinc border-t border-zinc-700 pt-10 text-zinc-300"
             dangerouslySetInnerHTML={{ __html: portfolio.detail }}
           />
         </div>

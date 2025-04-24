@@ -105,7 +105,7 @@ const Portfolio = () => {
           {portfolios.map((pf) => (
             <li
               key={pf.id}
-              className="bg-white rounded-xl shadow hover:shadow-md transition duration-300 flex flex-col cursor-pointer overflow-hidden md:h-[400px] sm:h-[300px] h-[400px]"
+              className="bg-white rounded-xl shadow hover:shadow-md transition duration-300 flex flex-col cursor-pointer  md:h-[400px] sm:h-[300px] h-[400px]"
               onClick={() => {
                 setSelected(pf); // 선택한 포트폴리오
                 setModalOpen(true); // 모달 열기
@@ -125,16 +125,21 @@ const Portfolio = () => {
                   <h3 className="font-bold text-zinc-800 text-base">
                     {pf.title}
                   </h3>
-                  {pf.Skills && pf.Skills.length > 0 && (
+                  {/* 태그 */}
+                  {/* {pf.Skills && pf.Skills.length > 0 && (
                     <div className="my-2 flex flex-wrap gap-2">
                       <Tags
                         list={pf.Skills}
                         color="sky"
-                        width={20}
-                        height={20}
+                        width={16}
+                        height={16}
                       />
                     </div>
-                  )}
+                  )} */}
+                  <p className="text-xs text-zinc-500 my-1 text-right">
+                    {pf.period} <span className="mx-1 text-zinc-400">|</span>
+                    {pf.members}명
+                  </p>
 
                   <p className="text-sm text-zinc-600 line-clamp-2">
                     {pf.description}

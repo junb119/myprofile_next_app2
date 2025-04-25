@@ -2,7 +2,6 @@
 import Loader from "@/components/Loader";
 import PageTitle from "@/components/PageTitle";
 import PortfolioModal from "@/components/PortfolioModal";
-import Tags from "@/components/tags";
 import { useAdminSession } from "@/hook/useAdminSession";
 import useGetPortfolio from "@/hook/useGetPortfolio";
 import { Portfolio } from "@prisma/client";

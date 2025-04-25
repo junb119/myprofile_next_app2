@@ -2,14 +2,19 @@ import React from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
+import type {
+  UploadBeforeHandler,
+  UploadBeforeReturn,
+} from "suneditor-react/dist/types/upload";
+
 interface Props {
   value?: string;
   onChange: (content: string) => void;
   onImageUploadBefore?: (
     files: File[],
     info: object,
-    uploadHandler: (data: { result?: any[]; errorMessage?: string }) => void
-  ) => boolean | Promise<boolean>;
+    uploadHandler: UploadBeforeHandler
+  ) => UploadBeforeReturn;
 }
 
 const Editor = ({ value = "", onChange, onImageUploadBefore }: Props) => {

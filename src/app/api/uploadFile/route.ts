@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const resourceType = file.type.startsWith("video") ? "video" : "image";
+    // const resourceType = file.type.startsWith("video") ? "video" : "image";
 
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
             folder: rawPath.replace(/^\/+/, ""), // 슬래시 제거
             public_id: publicId ?? undefined, // 지정 시 덮어쓰기
             overwrite: true,
-            resource_type: resourceType,
+            resource_type: 'image',
           },
           (err, result) => {
             if (err) reject(err);

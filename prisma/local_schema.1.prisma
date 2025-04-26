@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AboutMe {
+  id        String   @id @default(cuid())
+  image     String
+  name      String
+  tagline   String
+  email     String
+  githubUrl String
+  bio       String
+  fields    Json?
+  skills    String[] // 💡 사용 기술 리스트
+  favorites String[] // 💡 좋아하는 것들
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SkillCategory {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  skills      Skill[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id           String        @id @default(cuid())
+  name         String
+  icon         String
+  iconPublicId String? // cloudinary public_id
+  level        Int
+  description  String
+  category     SkillCategory @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Portfolios   Portfolio[]   @relation("PortfolioSkills")
+}
+
+model Portfolio {
+  id          String   @id @default(cuid())
+  title       String
+  period      String
+  Skills      Skill[]  @relation("PortfolioSkills")
+  tools       String[]
+  members     String
+  description String
+  thumb       String
+  detail      String
+  github      String?
+  path        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Role        Role[]   @relation("Portfolio_Role")
+  roleId      String?
+}
+
+model Role {
+  id         String      @id @default(cuid())
+  name       String
+  portfolios Portfolio[] @relation("Portfolio_Role")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}

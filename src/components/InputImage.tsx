@@ -84,13 +84,13 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 
-interface InputImageProps {
+interface InputImageProps<T extends FieldValues> {
   id: string;
   label: string;
-  register: UseFormRegister<FieldValues>;
-  setValue: UseFormSetValue<any>;
-  watch: UseFormWatch<any>;
-  errors: FieldErrors;
+  register: UseFormRegister<T>;
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
+  errors: FieldErrors<T>;
   required?: boolean;
   disabled?: boolean;
   showLabel?: boolean;
@@ -98,7 +98,7 @@ interface InputImageProps {
   defaultImageUrl?: string;
 }
 
-const InputImage = ({
+const InputImage = <T extends FieldValues>({
   id,
   label,
   register,
@@ -110,7 +110,7 @@ const InputImage = ({
   showLabel = true,
   preview = true,
   defaultImageUrl,
-}: InputImageProps) => {
+}: InputImageProps<T>) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [mode, setMode] = useState<"upload" | "url">("upload");
 

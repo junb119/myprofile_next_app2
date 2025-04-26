@@ -33,7 +33,7 @@ export default function EditAbout() {
     reset,
     watch,
     formState: { errors },
-  } = useForm<AboutMe>({
+  } = useForm<AboutMeFormValues>({
     defaultValues: {
       id: "",
       name: "",

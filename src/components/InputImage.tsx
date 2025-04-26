@@ -38,7 +38,7 @@
 //       setPreviewUrl(defaultImageUrl);
 //     }
 //   }, [defaultImageUrl]);
-  
+
 //   return (
 //     <div className="flex items-center mb-4 w-[30%]">
 //       <label
@@ -76,7 +76,13 @@
 // export default InputImage;
 "use client";
 import React, { useEffect, useState } from "react";
-import { FieldErrors, FieldValues, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 
 interface InputImageProps {
   id: string;
@@ -118,7 +124,11 @@ const InputImage = ({
   }, [defaultImageUrl]);
 
   useEffect(() => {
-    if (mode === "upload" && selectedFile && selectedFile[0] instanceof File) {
+    if (
+      mode === "upload" &&
+      selectedFile &&
+      typeof selectedFile[0]?.name === "string"
+    ) {
       const file = selectedFile[0];
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);

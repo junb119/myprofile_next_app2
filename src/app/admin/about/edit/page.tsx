@@ -69,7 +69,7 @@ export default function EditAbout() {
     try {
       const file = formData.image?.[0];
 
-      if (file instanceof File) {
+      if (file && typeof (file as any).name === "string") {
         // ✅ 새 파일이 업로드된 경우에만 업로드 API 요청
         const fileData = new FormData();
         fileData.append("file", file);

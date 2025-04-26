@@ -30,7 +30,7 @@ const AddSkill = () => {
     try {
       const file = data.icon?.[0];
 
-      if (file instanceof File) {
+      if (file && typeof (file as any).name === "string") {
         const fileData = new FormData();
         const publicId = uuidv4(); // Cloudinary에 저장할 고유 publicId
         fileData.append("file", file);

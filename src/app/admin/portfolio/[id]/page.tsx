@@ -63,7 +63,7 @@ const EditPortfolio = () => {
     let thumbUrl = initialThumbUrl;
 
     try {
-      if (file instanceof File) {
+      if (file && typeof (file as any).name === "string") {
         const publicId = id; // ✅ 고정 publicId
 
         const fileData = new FormData();

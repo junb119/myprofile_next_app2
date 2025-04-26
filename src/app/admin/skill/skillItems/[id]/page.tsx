@@ -43,7 +43,7 @@ const EditSkill = () => {
     try {
       const fileList = formData.icon;
 
-      if (fileList && fileList[0] instanceof File) {
+      if (fileList && typeof fileList[0]?.name === "string") {
         const fileData = new FormData();
         fileData.append("file", fileList[0]);
         fileData.append("subPath", "skills/icon");

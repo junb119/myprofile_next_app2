@@ -1,6 +1,6 @@
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-interface InputProps {
+interface InputProps<T extends FieldValues> {
   id: string;
   label: string;
   disabled?: boolean;
@@ -8,15 +8,15 @@ interface InputProps {
   minLength?: number;
   maxLength?: number;
   pattern?: RegExp;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
   placeholder?: string;
   showLabel?: boolean;
   defaultValue?: string;
   value?: string | number;
 }
 
-const InputText = ({
+const InputText = <T extends FieldValues>({
   id,
   label,
   showLabel = true,
@@ -29,7 +29,7 @@ const InputText = ({
   errors,
   placeholder,
   defaultValue,
-}: InputProps) => {
+}: InputProps<T>) => {
   return (
     <div className="flex items-center mb-4 w-[30%]">
       <label

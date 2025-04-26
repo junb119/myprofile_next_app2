@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 // context: { params: { id: string } }
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   
-  const id = (await params).id;
+  const id = context.params.id;
   try {
     const skill = await prisma.skill.findUnique({
       where: { id: id },
@@ -20,12 +20,12 @@ export async function GET(
 }
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { authorized, response } = await requireAdmin();
   if (!authorized) return response;
 
-  const id = (await params).id;
+  const id = context.params.id;
 
   try {
     const successDelete = await prisma.skill.delete({
@@ -39,13 +39,13 @@ export async function DELETE(
 }
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { authorized, response } = await requireAdmin();
   if (!authorized) return response;
 
   const { name, level, description, icon, categoryId } = await req.json();
-  const id = (await params).id;
+  const id = context.params.id;
 
   try {
     const editSkill = await prisma.skill.update({

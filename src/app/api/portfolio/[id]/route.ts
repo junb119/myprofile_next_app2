@@ -4,12 +4,12 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { authorized, response } = await requireAdmin();
   if (!authorized) return response;
 
-  const id = (await params)?.id;
+  const id = context.params.id;
   try {
     const portfolioDelete = await prisma.portfolio.delete({
       where: { id },
@@ -20,12 +20,8 @@ export async function DELETE(
     return new NextResponse("포트폴리오 삭제 실패", { status: 500 });
   }
 }
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-
-  const id = (await params)?.id;
+export async function GET(req: Request, context: { params: { id: string } }) {
+  const id = context.params.id;
   try {
     const portfolioId = await prisma.portfolio.findUnique({
       where: { id },
@@ -42,7 +38,7 @@ export async function GET(
 }
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { authorized, response } = await requireAdmin();
   if (!authorized) return response;
@@ -59,7 +55,7 @@ export async function PATCH(
     skillIds,
     roleIds,
   } = await req.json();
-  const id = (await params)?.id;
+  const id = context.params.id;
   try {
     const portfolioUpdate = await prisma.portfolio.update({
       where: { id },

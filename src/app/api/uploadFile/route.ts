@@ -69,18 +69,27 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(bytes);
     // const resourceType = file.type.startsWith("video") ? "video" : "image";
 
-    const result = await new Promise((resolve, reject) => {
+    const result = await new Promise<{
+      secure_url: string;
+      public_id: string;
+      url?: string;
+    }>((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
-            folder: rawPath.replace(/^\/+/, ""), // 슬래시 제거
-            public_id: publicId ?? undefined, // 지정 시 덮어쓰기
+            folder: rawPath.replace(/^\/+/, ""),
+            public_id: publicId ?? undefined,
             overwrite: true,
-            resource_type: 'image',
+            resource_type: "image",
           },
           (err, result) => {
-            if (err) reject(err);
-            else resolve(result);
+            if (err) {
+              reject(err);
+            } else if (result) {
+              resolve(result); // ✅ result가 있을 때만 resolve
+            } else {
+              reject(new Error("Upload failed, no result.")); // ✅ undefined 경우도 reject
+            }
           }
         )
         .end(buffer);

@@ -9,7 +9,6 @@ import InputImage from "@/components/InputImage";
 import InputRange from "@/components/InputRange";
 import Select from "@/components/Select";
 import useGetSkillCategory from "@/hook/useGetSkillCategory";
-import { v4 as uuidv4 } from "uuid";
 
 const EditSkill = () => {
   const { skillCategory, error, loading } = useGetSkillCategory();
@@ -39,7 +38,7 @@ const EditSkill = () => {
     fetchData();
   }, [id, reset]);
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async (formData: any) => {
     try {
       const fileList = formData.icon;
 
@@ -47,7 +46,7 @@ const EditSkill = () => {
         const fileData = new FormData();
         fileData.append("file", fileList[0]);
         fileData.append("subPath", "skills/icon");
-        fileData.append("publicId", id);
+        fileData.append("publicId", id as string);
 
         const {
           data: { secure_url },
@@ -77,7 +76,7 @@ const EditSkill = () => {
         register={register}
         errors={errors}
         preview
-        defaultImageUrl={defaultImageUrl}
+        defaultImageUrl={defaultImageUrl ?? undefined}
         setValue={setValue}
         watch={watch}
       />

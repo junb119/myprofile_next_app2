@@ -36,14 +36,17 @@ const Skills = () => {
       <PageTitle title="Skills" icon="💻" />
       <nav>
         <CategoryList
-          categories={categories}
+          categories={categories ?? []}
           selectedCategoryId={selectedCategoryId}
           setSelectedCategoryId={setSelectedCategoryId}
         />
       </nav>
       <section>
         {isAdmin && <Link href="/admin/skill/skillItems/add">스킬 추가</Link>}
-        <SkillList skills={skills} selectedCategoryId={selectedCategoryId} />
+        <SkillList
+          skills={skills ?? []}
+          selectedCategoryId={selectedCategoryId}
+        />
       </section>
     </>
   );

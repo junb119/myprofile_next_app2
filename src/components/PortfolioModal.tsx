@@ -1,7 +1,7 @@
 import { Portfolio } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import Tags from './Tags'
+import Tags from "./Tags";
 interface PortfolioWithRelations extends Portfolio {
   Skills: { name: string; icon: string }[];
   Role: { name: string }[];
@@ -82,7 +82,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
           <div className="flex gap-4 pt-4 text-sm">
             {/* {portfolio.github && ( */}
             <a
-              href={portfolio.github}
+              href={portfolio.github || ""}
               target="_blank"
               className="text-sky-600 hover:underline"
             >
@@ -91,7 +91,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
             {/* )} */}
             {/* {portfolio.path && ( */}
             <a
-              href={portfolio.path}
+              href={portfolio.path || ""}
               target="_blank"
               className="text-amber-600 hover:underline"
             >

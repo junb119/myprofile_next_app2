@@ -24,7 +24,7 @@ const AddSkill = () => {
   } = useForm();
   const level = watch("level");
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:any) => {
     let secureUrl = "";
 
     try {

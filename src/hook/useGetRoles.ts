@@ -12,7 +12,7 @@ export default function useGetRoles() {
     const fetchRoles = async () => {
       try {
         const { data } = await axios.get("/api/portfolio/roles");
-        const Roles = data.map((role) => ({
+        const Roles = data.map((role:any) => ({
           id: role.id,
           name: role.name,
         }));

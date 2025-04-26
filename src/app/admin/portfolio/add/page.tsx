@@ -12,10 +12,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/Loader";
-import type {
-  UploadBeforeHandler,
-  UploadBeforeReturn,
-} from "suneditor-react/dist/types/upload";
+// import type {
+//   UploadBeforeHandler,
+//   UploadBeforeReturn,
+// } from "suneditor-react/dist/types/upload";
 
 // type HandleEditorImageUpload = (
 //   files: File[],
@@ -38,7 +38,7 @@ const AddPortfolio = () => {
   const { skills, loading, error } = useGetSkills();
   const router = useRouter();
   const { roles } = useGetRoles();
-  const handleAddSubmit = async (data) => {
+  const handleAddSubmit = async (data: any) => {
     const file = data.thumb?.[0];
     // const filename = await getFilename(file, "/api/upload/icon");
     const fileData = new FormData();
@@ -105,7 +105,11 @@ const AddPortfolio = () => {
 
   //   return false; // 기본 삽입도 차단
   // };
-  const handleEditorImageUpload = async (files, info, uploadHandler) => {
+  const handleEditorImageUpload = async (
+    files: any,
+    info:any,
+    uploadHandler: any
+  ) => {
     const file = files?.[0];
 
     // ⚠️ 방어 코드 추가: 핸들러 없으면 fallback 허용 (또는 return false로 차단 가능)
@@ -278,9 +282,9 @@ const AddPortfolio = () => {
         <Editor
           value={watch("detail")}
           onChange={(html) => setValue("detail", html)}
-          onImageUploadBefore={(...args) => {
+          onImageUploadBefore={(...args: any[]) => {
             console.log("🔥 onImageUploadBefore called with:", args);
-            return handleEditorImageUpload(...args);
+            return (handleEditorImageUpload as any)(...args);
           }}
         />
         <button

@@ -14,7 +14,7 @@ export default function useGetSkills() {
     const fetchSkills = async () => {
       try {
         const { data } = await axios.get("/api/skill/items");
-        const Skills = data.map((skill) => ({
+        const Skills = data.map((skill:any) => ({
           id: skill.id,
           name: skill.name,
           icon: skill.icon,

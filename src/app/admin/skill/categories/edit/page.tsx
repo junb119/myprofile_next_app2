@@ -28,11 +28,11 @@ const EditCategoryList = () => {
     fetchData();
   }, []);
 
-  const handleEditSubmit = async (data) => {
+  const handleEditSubmit = async (data: any) => {
     const { new: _, ...updateData } = data; // ✅ 'new' 필드 제거
 
     try {
-      const res = await axios.patch("/api/skill/category", updateData);
+      await axios.patch("/api/skill/category", updateData);
       router.push("/skills");
     } catch (error) {
       console.error(error);
@@ -53,7 +53,7 @@ const EditCategoryList = () => {
       console.error(error);
     }
   };
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: any) => {
     try {
       await axios.delete("/api/skill/category", {
         data: { id },
@@ -72,7 +72,7 @@ const EditCategoryList = () => {
           <li key={category.id} className="flex ">
             <Input
               id={category.id}
-              label={category.label}
+              label={"카테고리 이름"}
               register={register}
               errors={errors}
               showLabel={false}

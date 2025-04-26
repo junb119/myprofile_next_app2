@@ -79,13 +79,14 @@ import React, { useEffect, useState } from "react";
 import {
   FieldErrors,
   FieldValues,
+  Path,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
 
 interface InputImageProps<T extends FieldValues> {
-  id: string;
+  id: Path<T>;
   label: string;
   register: UseFormRegister<T>;
   setValue: UseFormSetValue<T>;
@@ -139,7 +140,7 @@ const InputImage = <T extends FieldValues>({
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
-    setValue(id, url);
+    setValue(id, url as any);
   };
 
   return (
@@ -154,7 +155,7 @@ const InputImage = <T extends FieldValues>({
             checked={mode === "upload"}
             onChange={() => {
               setMode("upload");
-              setValue(id, null); // 기존 URL 값 초기화
+              setValue(id, null as any); // 기존 URL 값 초기화
               setPreviewUrl(null);
             }}
             className="mr-1"
@@ -168,7 +169,7 @@ const InputImage = <T extends FieldValues>({
             checked={mode === "url"}
             onChange={() => {
               setMode("url");
-              setValue(id, ""); // 파일 초기화
+              setValue(id, "" as any); // 파일 초기화
               setPreviewUrl(null);
             }}
             className="mr-1"

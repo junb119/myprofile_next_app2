@@ -14,7 +14,7 @@ export default function useGetSkillCategory() {
     const fetchCategory = async () => {
       try {
         const { data } = await axios.get("/api/skill/category");
-        const newCategory = data.map((category) => ({
+        const newCategory = data.map((category:any) => ({
           value: category.id,
           label: category.name,
         }));

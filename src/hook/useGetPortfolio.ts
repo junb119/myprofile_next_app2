@@ -18,7 +18,7 @@ export default function useGetPortfolio() {
     const fetchPortfolio = async () => {
       try {
         const { data } = await axios.get("/api/portfolio");
-        const portfolioList = data.map((pf) => ({
+        const portfolioList = data.map((pf:any) => ({
           id: pf.id,
           title: pf.title,
           period: pf.period,

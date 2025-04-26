@@ -64,14 +64,13 @@ export default function Home() {
           </div>
 
           {/* 역할 태그 */}
-          {aboutData.fields?.length > 0 && (
+          {Array.isArray(aboutData.fields) && aboutData.fields.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {aboutData.fields.map((field, i) => (
-                <span
-                  key={i}
-                  className="bg-amber-100 text-amber-800 px-3 py-1 text-xs rounded-full"
-                >
-                  {field}
+                <span key={i}>
+                  {typeof field === "string" || typeof field === "number"
+                    ? field
+                    : JSON.stringify(field)}
                 </span>
               ))}
             </div>

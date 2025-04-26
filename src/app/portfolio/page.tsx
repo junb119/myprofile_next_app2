@@ -4,7 +4,7 @@ import PageTitle from "@/components/PageTitle";
 import PortfolioModal from "@/components/PortfolioModal";
 import { useAdminSession } from "@/hook/useAdminSession";
 import useGetPortfolio from "@/hook/useGetPortfolio";
-import { Portfolio } from "@prisma/client";
+import type { Portfolio } from "@prisma/client";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";

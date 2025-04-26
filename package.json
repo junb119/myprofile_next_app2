@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
-    "@ckeditor/ckeditor5-horizontal-line": "^45.0.0",
     "@ckeditor/ckeditor5-react": "^9.5.0",
     "axios": "^1.8.4",
     "cloudinary": "^2.6.0",

@@ -179,6 +179,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Skill } from "@prisma/client";
 
 const getLevelText = (level: number) => {
   if (level >= 9) return "🔥 자신 있어요";
@@ -186,16 +187,19 @@ const getLevelText = (level: number) => {
   if (level >= 3) return "💡 기본이에요";
   return "🐣 써봤어요";
 };
-
-const SkillList = ({ skills, selectedCategoryId }) => {
+interface SkillListProps {
+  skills: Skill[];
+  selectedCategoryId: string | null;
+}
+const SkillList = ({ skills, selectedCategoryId }: SkillListProps) => {
   const router = useRouter();
   const { isAdmin } = useAdminSession();
 
   const filteredSkills = skills?.filter(
-    (skill) => skill.categoryId === selectedCategoryId
+    (skill: any) => skill.categoryId === selectedCategoryId
   );
 
-  const handleSkillDelete = async (id) => {
+  const handleSkillDelete = async (id: any) => {
     const isDelete = confirm("정말 삭제하시겠습니까?");
     try {
       if (isDelete) {
@@ -229,7 +233,7 @@ const SkillList = ({ skills, selectedCategoryId }) => {
         transition={{ duration: 0.3 }}
         className="space-y-4 mt-6 max-w-3xl mx-auto"
       >
-        {filteredSkills.map((skill, index) => (
+        {filteredSkills.map((skill: any, index: any) => (
           <motion.li
             key={skill.id}
             initial={{ opacity: 0, y: 10 }}

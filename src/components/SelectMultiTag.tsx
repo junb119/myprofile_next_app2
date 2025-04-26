@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { UseFormSetValue, UseFormWatch } from "react-hook-form";
+import {  UseFormWatch } from "react-hook-form";
 
 interface SelectMultiTagProps {
   Tags: { id: string; name: string; icon?: string }[];

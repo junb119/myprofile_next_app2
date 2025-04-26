@@ -44,7 +44,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(deleteCategory);
   } catch (error) {
     console.error(error);
-    return new NextResponse(error, { status: 500 });
+    return new NextResponse('에러', { status: 500 });
   }
 }
 

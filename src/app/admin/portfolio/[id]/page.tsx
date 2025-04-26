@@ -44,11 +44,11 @@ const EditPortfolio = () => {
         setInitialThumbUrl(data.thumb);
         setValue(
           "skillIds",
-          data.Skills.map((s) => s.id)
+          data.Skills.map((s: any) => s.id)
         );
         setValue(
           "roleIds",
-          data.Role.map((r) => r.id)
+          data.Role.map((r: any) => r.id)
         );
         setValue("detail", data.detail);
       } catch (error) {
@@ -58,13 +58,13 @@ const EditPortfolio = () => {
     fetchData();
   }, [id, reset, roles, skills, setValue]);
 
-  const handleEditSubmit = async (data) => {
+  const handleEditSubmit = async (data: any) => {
     const file = data.thumb?.[0];
     let thumbUrl = initialThumbUrl;
 
     try {
       if (file && typeof (file as any).name === "string") {
-        const publicId = id; // ✅ 고정 publicId
+        const publicId = id as string; // ✅ 고정 publicId
 
         const fileData = new FormData();
         fileData.append("file", file);
@@ -133,7 +133,11 @@ const EditPortfolio = () => {
 
   //   return false;
   // };
-  const handleEditorImageUpload = async (files, info, uploadHandler) => {
+  const handleEditorImageUpload = async (
+    files: any,
+    info: any,
+    uploadHandler: any
+  ) => {
     const file = files?.[0];
 
     // ⚠️ 방어 코드 추가: 핸들러 없으면 fallback 허용 (또는 return false로 차단 가능)
@@ -298,9 +302,9 @@ const EditPortfolio = () => {
           <Editor
             value={watch("detail")}
             onChange={(html) => setValue("detail", html)}
-            onImageUploadBefore={(...args) => {
+            onImageUploadBefore={(...args: any[]) => {
               console.log("🔥 onImageUploadBefore called with:", args);
-              return handleEditorImageUpload(...args);
+              return (handleEditorImageUpload as any)(...args);
             }}
           />
         )}

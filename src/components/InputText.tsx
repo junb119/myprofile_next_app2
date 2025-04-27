@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   FieldErrors,
@@ -5,6 +6,7 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form";
+
 interface InputProps<T extends FieldValues> {
   id: Path<T>;
   label: string;
@@ -36,13 +38,13 @@ const InputText = <T extends FieldValues>({
   defaultValue,
 }: InputProps<T>) => {
   return (
-    <div className="flex items-center mb-4 w-[30%]">
-      <label
-        htmlFor={id}
-        className={`${showLabel ? "block mb-1 font-semibold text" : "hidden"}`}
-      >
-        {`${label} : `}
-      </label>
+    <div className="mb-6 w-full">
+      {showLabel && (
+        <label htmlFor={id} className="block text-lg font-semibold mb-2">
+          {label}
+        </label>
+      )}
+
       <input
         id={id}
         type="text"
@@ -64,12 +66,13 @@ const InputText = <T extends FieldValues>({
             message: `${label} 형식이 올바르지 않습니다.`,
           },
         })}
-        className={` border px-3 py-2 rounded ${
+        className={`w-full border px-4 py-2 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-blue-500 ${
           errors[id] ? "border-red-500" : "border-gray-300"
         }`}
       />
+
       {errors[id] && (
-        <p className="text-sm text-red-500 mt-1">
+        <p className="text-sm text-red-500 mt-2">
           {errors[id]?.message?.toString()}
         </p>
       )}

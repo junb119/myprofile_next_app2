@@ -56,7 +56,7 @@ const EditSkill = () => {
       }
 
       await axios.patch(`/api/skill/items/${id}`, formData);
-      alert("수정 성공");
+      alert("스킬 수정 성공");
       router.push("/skills");
     } catch (error) {
       console.error(error);
@@ -64,51 +64,69 @@ const EditSkill = () => {
     }
   };
 
-  if (!skillCategory.length) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InputText id="name" label="스킬명" register={register} errors={errors} />
+    <div className="max-w-3xl mx-auto px-6 py-10">
+      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded-lg shadow space-y-6">
+        <InputText
+          id="name"
+          label="스킬명"
+          register={register}
+          errors={errors}
+        />
 
-      <InputImage
-        id="icon"
-        label="Icon"
-        register={register}
-        errors={errors}
-        preview
-        defaultImageUrl={defaultImageUrl ?? undefined}
-        setValue={setValue}
-        watch={watch}
-      />
+        <InputImage
+          id="icon"
+          label="아이콘"
+          register={register}
+          errors={errors}
+          preview
+          defaultImageUrl={defaultImageUrl ?? undefined}
+          setValue={setValue}
+          watch={watch}
+        />
 
-      <InputRange
-        id="level"
-        label="레벨"
-        register={register}
-        errors={errors}
-        min={1}
-        max={10}
-        value={level}
-      />
+        <InputRange
+          id="level"
+          label="숙련도"
+          register={register}
+          errors={errors}
+          min={1}
+          max={10}
+          value={level}
+        />
 
-      <InputText
-        id="description"
-        label="설명"
-        register={register}
-        errors={errors}
-      />
+        <InputText
+          id="description"
+          label="설명"
+          register={register}
+          errors={errors}
+        />
 
-      <Select
-        id="categoryId"
-        label="카테고리"
-        options={skillCategory}
-        register={register}
-        errors={errors}
-        required
-      />
+        {error ? (
+          <p className="text-sm text-red-500">{error}</p>
+        ) : (
+          <Select
+            id="categoryId"
+            label="카테고리"
+            options={skillCategory}
+            register={register}
+            errors={errors}
+            required
+          />
+        )}
 
-      <button type="submit">확인</button>
-    </form>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="mt-6 w-full max-w-xs px-6 py-3 rounded-md text-white font-semibold bg-blue-600 hover:bg-blue-700"
+          >
+            스킬 수정하기
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

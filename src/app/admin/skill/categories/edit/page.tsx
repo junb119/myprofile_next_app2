@@ -7,7 +7,7 @@ import Input from "@/components/InputText";
 import { useRouter } from "next/navigation";
 
 const EditCategoryList = () => {
-  const [skillCategory, setSkillCategory] = useState<SkillCategory[] | null>();
+  const [skillCategory, setSkillCategory] = useState<SkillCategory[] | null>(null);
   const {
     register,
     handleSubmit,
@@ -16,6 +16,7 @@ const EditCategoryList = () => {
     resetField,
   } = useForm();
   const router = useRouter();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,8 +30,7 @@ const EditCategoryList = () => {
   }, []);
 
   const handleEditSubmit = async (data: any) => {
-    const { new: _, ...updateData } = data; // ✅ 'new' 필드 제거
-
+    const { new: _, ...updateData } = data;
     try {
       await axios.patch("/api/skill/category", updateData);
       router.push("/skills");
@@ -38,6 +38,7 @@ const EditCategoryList = () => {
       console.error(error);
     }
   };
+
   const handleAdd = async () => {
     try {
       const newName = getValues("new");
@@ -49,11 +50,13 @@ const EditCategoryList = () => {
       });
       resetField("new");
       alert("추가되었습니다.");
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
   };
-  const handleDelete = async (id: any) => {
+
+  const handleDelete = async (id: string) => {
     try {
       await axios.delete("/api/skill/category", {
         data: { id },
@@ -65,49 +68,70 @@ const EditCategoryList = () => {
       router.refresh();
     }
   };
+
   return (
-    <form>
-      <ul>
+    <form className="max-w-3xl mx-auto px-6 py-8 space-y-6">
+      <ul className="space-y-4">
         {skillCategory?.map((category) => (
-          <li key={category.id} className="flex ">
-            <Input
-              id={category.id}
-              label={"카테고리 이름"}
-              register={register}
-              errors={errors}
-              showLabel={false}
-              defaultValue={category.name}
-              required
-            />
-            <span>
-              <button
-                type="button"
-                onClick={() => {
-                  const result = confirm("정말 삭제하시겠습니까?");
-                  if (result) {
-                    handleDelete(category.id);
-                  }
-                }}
-              >
-                삭제
-              </button>
-            </span>
+          <li key={category.id} className="flex items-center gap-4">
+            <div className="flex-1">
+              <Input
+                id={category.id}
+                label="카테고리 이름"
+                register={register}
+                errors={errors}
+                showLabel={false}
+                defaultValue={category.name}
+                required
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                const result = confirm("정말 삭제하시겠습니까?");
+                if (result) {
+                  handleDelete(category.id);
+                }
+              }}
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+            >
+              삭제
+            </button>
           </li>
         ))}
 
-        <li className="flex">
-          <Input
-            id="new"
-            label="new_category"
-            register={register}
-            errors={errors}
-            placeholder="새 카테고리 이름"
-            showLabel={false}
-          />
-          <button onClick={handleAdd}>등록</button>
+        <li className="flex items-center gap-4">
+          <div className="flex-1">
+            <Input
+              id="new"
+              label="새 카테고리 이름"
+              register={register}
+              errors={errors}
+              placeholder="새 카테고리 이름"
+              showLabel={false}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm"
+          >
+            등록
+          </button>
         </li>
       </ul>
-      <button onClick={handleSubmit(handleEditSubmit)}>확인</button>
+
+      <div className="flex justify-center">
+        <button
+          type="button"
+          onClick={handleSubmit(handleEditSubmit)}
+          className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-base font-semibold"
+        >
+          확인
+        </button>
+      </div>
     </form>
   );
 };

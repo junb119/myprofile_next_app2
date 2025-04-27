@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface PortfolioWithRelations extends Portfolio {
-  Skills: { name: string ,icon:string}[];
+  Skills: { name: string; icon: string }[];
   Role: { name: string }[];
 }
 
@@ -18,7 +18,7 @@ export default function useGetPortfolio() {
     const fetchPortfolio = async () => {
       try {
         const { data } = await axios.get("/api/portfolio");
-        const portfolioList = data.map((pf:any) => ({
+        const portfolioList = data.map((pf: any) => ({
           id: pf.id,
           title: pf.title,
           period: pf.period,

@@ -1,5 +1,4 @@
 "use client";
-
 import InputImage from "@/components/InputImage";
 import InputText from "@/components/InputText";
 import SelectMultiTag from "@/components/SelectMultiTag";
@@ -15,7 +14,7 @@ import Loader from "@/components/Loader";
 import { v4 as uuidv4 } from "uuid";
 
 const EditPortfolio = () => {
-  const [isUploading, setIsUploading] = useState(false); // 업로드 중 상태
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     register,
@@ -64,7 +63,7 @@ const EditPortfolio = () => {
 
     try {
       if (file && typeof (file as any).name === "string") {
-        const publicId = id as string; // ✅ 고정 publicId
+        const publicId = id as string;
 
         const fileData = new FormData();
         fileData.append("file", file);
@@ -83,74 +82,27 @@ const EditPortfolio = () => {
         thumb: thumbUrl,
       });
 
-      console.log("Portfolio 편집 성공", res.data);
-      alert("Portfolio 편집 성공");
+      alert("Portfolio 수정 성공");
       router.push("/portfolio");
     } catch (error) {
       console.error(error);
-      alert("Portfolio 편집 실패!");
+      alert("Portfolio 수정 실패!");
     }
   };
 
-  // const handleEditorImageUpload = async (files, info, uploadHandler) => {
-  //   const file = files[0];
-
-  //   // 용량 제한 (10MB)
-  //   if (file.size > 10 * 1024 * 1024) {
-  //     uploadHandler({
-  //       errorMessage: "10MB 이상 파일은 업로드할 수 없습니다.",
-  //     });
-  //     return false;
-  //   }
-
-  //   const formData = new FormData();
-  //   const publicId = `portfolio/detail/misc/${uuidv4()}`;
-  //   formData.append("file", file);
-  //   formData.append("subPath", "portfolio/detail");
-  //   formData.append("publicId", publicId);
-
-  //   try {
-  //     const {
-  //       data: { secure_url },
-  //     } = await axios.post("/api/uploadFile", formData);
-
-  //     uploadHandler({
-  //       result: [
-  //         {
-  //           url: secure_url,
-  //           name: file.name,
-  //           size: file.size,
-  //         },
-  //       ],
-  //     });
-  //   } catch (error) {
-  //     console.error("에디터 이미지 업로드 실패", error);
-  //     uploadHandler({
-  //       errorMessage: "이미지 업로드 실패. 용량 또는 네트워크를 확인해주세요.",
-  //     });
-  //     return false;
-  //   }
-
-  //   return false;
-  // };
-  const handleEditorImageUpload = async (
-    files: any,
-    info: any,
-    uploadHandler: any
-  ) => {
+  const handleEditorImageUpload = async (files: any, info: any, uploadHandler: any) => {
     const file = files?.[0];
-
-    // ⚠️ 방어 코드 추가: 핸들러 없으면 fallback 허용 (또는 return false로 차단 가능)
     if (!file || typeof uploadHandler !== "function") {
       console.warn("❗uploadHandler가 정의되지 않았거나 파일 없음");
-      return true; // 또는 return false; 로 base64 삽입 차단
+      return true;
     }
     setIsUploading(true);
-    // 용량 제한
+
     if (file.size > 10 * 1024 * 1024) {
       uploadHandler({
         errorMessage: "10MB 이상 파일은 업로드할 수 없습니다.",
       });
+      setIsUploading(false);
       return false;
     }
 
@@ -160,42 +112,12 @@ const EditPortfolio = () => {
     formData.append("subPath", "portfolio/detail");
     formData.append("publicId", publicId);
 
-    // try {
-    //   const {
-    //     data: { secure_url },
-    //   } = await axios.post("/api/uploadFile", formData);
-
-    //   // ✅ 안전하게 핸들러 호출
-    //   uploadHandler({
-    //     result: [
-    //       {
-    //         url: secure_url,
-    //         name: file.name,
-    //         size: file.size,
-    //       },
-    //     ],
-    //   });
-    //   console.log("🔥 handler exists:", typeof uploadHandler);
-    //   console.log("🔥 file size:", file.size);
-    //   console.log("🔥 response url:", secure_url);
-
-    //   return false; // base64 삽입 방지
-    // } catch (error) {
-    //   console.error("에디터 이미지 업로드 실패", error);
-
-    //   uploadHandler({
-    //     errorMessage:
-    //       "이미지 업로드 실패. 용량 또는 네트워크 문제일 수 있습니다.",
-    //   });
-
-    //   return false;
-    // }
     try {
       const {
         data: { secure_url },
       } = await axios.post("/api/uploadFile", formData);
 
-      if (secure_url && typeof uploadHandler === "function") {
+      if (secure_url) {
         uploadHandler({
           result: [
             {
@@ -205,24 +127,15 @@ const EditPortfolio = () => {
             },
           ],
         });
-      } else {
-        console.warn(
-          "⚠️ uploadHandler 없거나 secure_url 없음. base64 삽입 가능성"
-        );
       }
       setIsUploading(false);
       return false;
     } catch (error) {
       console.error("에디터 이미지 업로드 실패", error);
-
-      // 👇 이게 에러 발생 지점이므로 타입 체크 확실히 하고 실행
       if (typeof uploadHandler === "function") {
         uploadHandler({
-          errorMessage:
-            "이미지 업로드 실패. 용량 또는 네트워크 문제일 수 있습니다.",
+          errorMessage: "이미지 업로드 실패. 네트워크를 확인해주세요.",
         });
-      } else {
-        console.warn("❌ uploadHandler가 정의되지 않아 fallback 방지 실패");
       }
       setIsUploading(false);
       return false;
@@ -232,8 +145,8 @@ const EditPortfolio = () => {
   if (loading) return <Loader />;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(handleEditSubmit)}>
+    <div className="max-w-4xl mx-auto px-6 py-10">
+      <form onSubmit={handleSubmit(handleEditSubmit)} className="bg-white p-8 rounded-lg shadow space-y-6">
         <InputText
           id="title"
           label="포트폴리오 이름"
@@ -298,24 +211,33 @@ const EditPortfolio = () => {
           register={register}
           errors={errors}
         />
-        {watch("detail") !== undefined && (
-          <Editor
-            value={watch("detail")}
-            onChange={(html) => setValue("detail", html)}
-            onImageUploadBefore={(...args: any[]) => {
-              console.log("🔥 onImageUploadBefore called with:", args);
-              return (handleEditorImageUpload as any)(...args);
-            }}
-          />
-        )}
 
-        <button
-          type="submit"
-          disabled={isUploading}
-          className="mt-4 px-4 py-2 bg-black text-white rounded"
-        >
-          {isUploading ? "이미지 업로드 중..." : "수정하기"}
-        </button>
+        <div className="space-y-2">
+          <label className="block text-lg font-semibold mb-1">상세 내용</label>
+          {watch("detail") !== undefined && (
+            <Editor
+              value={watch("detail")}
+              onChange={(html) => setValue("detail", html)}
+              onImageUploadBefore={(...args: any[]) => {
+                return (handleEditorImageUpload as any)(...args);
+              }}
+            />
+          )}
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            disabled={isUploading}
+            className={`mt-6 w-full max-w-xs px-6 py-3 rounded-md text-white font-semibold ${
+              isUploading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {isUploading ? "이미지 업로드 중..." : "포트폴리오 수정하기"}
+          </button>
+        </div>
       </form>
     </div>
   );

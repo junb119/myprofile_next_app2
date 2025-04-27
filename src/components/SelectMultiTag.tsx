@@ -1,15 +1,16 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import {  UseFormWatch } from "react-hook-form";
+import { UseFormWatch } from "react-hook-form";
 
 interface SelectMultiTagProps {
   Tags: { id: string; name: string; icon?: string }[];
   setValue: any;
-  watch: UseFormWatch<any>; // ✅ 추가
+  watch: UseFormWatch<any>;
   TagName: string;
   label: string;
 }
+
 const SelectMultiTag = ({
   Tags,
   setValue,
@@ -17,11 +18,10 @@ const SelectMultiTag = ({
   watch,
   label,
 }: SelectMultiTagProps) => {
-  const selectedFromWatch = watch(TagName); // 실시간 감지
+  const selectedFromWatch = watch(TagName);
   const [selectedTagsId, setSelectedTagsId] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log(`선택된 ${TagName} 태그`, selectedTagsId);
     if (Array.isArray(selectedFromWatch)) {
       setSelectedTagsId(selectedFromWatch);
     }
@@ -35,31 +35,39 @@ const SelectMultiTag = ({
     } else {
       updatedTags = [...selectedTagsId, id];
     }
-    console.log(updatedTags);
     setSelectedTagsId(updatedTags);
-    setValue(TagName, updatedTags); // react-hook-form에 수동 등록
+    setValue(TagName, updatedTags);
   };
 
   return (
-    <div className="flex flex-wrap gap-2 mt-4">
-      <p>{label} : </p>
-      {Tags?.map((tag) => (
-        <button
-          key={tag.id}
-          type="button"
-          onClick={() => toggleSkill(tag.id)}
-          className={`px-3 py-1 border rounded-full ${
-            selectedTagsId.includes(tag.id)
-              ? "bg-blue-500 text-white"
-              : "bg-gray-100"
-          }`}
-        >
-          {tag.icon && (
-            <Image src={tag.icon} alt="icon" width="30" height={30} />
-          )}
-          {tag.name}
-        </button>
-      ))}
+    <div className="mb-6">
+      <label className="block text-lg font-semibold mb-3">{label}</label>
+
+      <div className="flex flex-wrap gap-3">
+        {Tags?.map((tag) => (
+          <button
+            key={tag.id}
+            type="button"
+            onClick={() => toggleSkill(tag.id)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition ${
+              selectedTagsId.includes(tag.id)
+                ? "bg-blue-500 text-white border-blue-500"
+                : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+            }`}
+          >
+            {tag.icon && (
+              <Image
+                src={tag.icon}
+                alt="icon"
+                width={24}
+                height={24}
+                className="object-contain"
+              />
+            )}
+            {tag.name}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

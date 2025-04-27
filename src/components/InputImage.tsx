@@ -74,6 +74,150 @@
 // };
 
 // export default InputImage;
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import {
+//   FieldErrors,
+//   FieldValues,
+//   Path,
+//   UseFormRegister,
+//   UseFormSetValue,
+//   UseFormWatch,
+// } from "react-hook-form";
+
+// interface InputImageProps<T extends FieldValues> {
+//   id: Path<T>;
+//   label: string;
+//   register: UseFormRegister<T>;
+//   setValue: UseFormSetValue<T>;
+//   watch: UseFormWatch<T>;
+//   errors: FieldErrors<T>;
+//   required?: boolean;
+//   disabled?: boolean;
+//   showLabel?: boolean;
+//   preview?: boolean;
+//   defaultImageUrl?: string;
+// }
+
+// const InputImage = <T extends FieldValues>({
+//   id,
+//   label,
+//   register,
+//   setValue,
+//   watch,
+//   errors,
+//   required = false,
+//   disabled = false,
+//   showLabel = true,
+//   preview = true,
+//   defaultImageUrl,
+// }: InputImageProps<T>) => {
+//   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+//   const [mode, setMode] = useState<"upload" | "url">("upload");
+
+//   const selectedFile = watch(id);
+
+//   useEffect(() => {
+//     // 기본 이미지 보여주기 (edit 시)
+//     if (defaultImageUrl) {
+//       setPreviewUrl(defaultImageUrl);
+//     }
+//   }, [defaultImageUrl]);
+
+//   useEffect(() => {
+//     if (
+//       mode === "upload" &&
+//       selectedFile &&
+//       typeof selectedFile[0]?.name === "string"
+//     ) {
+//       const file = selectedFile[0];
+//       const url = URL.createObjectURL(file);
+//       setPreviewUrl(url);
+//     } else if (mode === "url" && typeof selectedFile === "string") {
+//       setPreviewUrl(selectedFile);
+//     }
+//   }, [selectedFile, mode]);
+
+//   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const url = e.target.value;
+//     setValue(id, url as any);
+//   };
+
+//   return (
+//     <div className="mb-4">
+//       {showLabel && <label className="block font-semibold mb-1">{label}</label>}
+
+//       <div className="flex gap-4 mb-2">
+//         <label className="text-sm">
+//           <input
+//             type="radio"
+//             value="upload"
+//             checked={mode === "upload"}
+//             onChange={() => {
+//               setMode("upload");
+//               setValue(id, null as any); // 기존 URL 값 초기화
+//               setPreviewUrl(null);
+//             }}
+//             className="mr-1"
+//           />
+//           파일 업로드
+//         </label>
+//         <label className="text-sm">
+//           <input
+//             type="radio"
+//             value="url"
+//             checked={mode === "url"}
+//             onChange={() => {
+//               setMode("url");
+//               setValue(id, "" as any); // 파일 초기화
+//               setPreviewUrl(null);
+//             }}
+//             className="mr-1"
+//           />
+//           이미지 URL
+//         </label>
+//       </div>
+
+//       {mode === "upload" ? (
+//         <input
+//           type="file"
+//           id={id}
+//           accept="image/*"
+//           disabled={disabled}
+//           {...register(id, {
+//             required: required && `${label}은(는) 필수입니다`,
+//           })}
+//           className={`w-full border px-3 py-2 rounded ${
+//             errors[id] ? "border-red-500" : "border-gray-300"
+//           }`}
+//         />
+//       ) : (
+//         <input
+//           type="text"
+//           placeholder="https://example.com/icon.svg"
+//           onChange={handleUrlChange}
+//           className={`w-full border px-3 py-2 rounded ${
+//             errors[id] ? "border-red-500" : "border-gray-300"
+//           }`}
+//         />
+//       )}
+
+//       {preview && previewUrl && (
+//         <div className="mt-2">
+//           <img src={previewUrl} alt="preview" width={100} />
+//         </div>
+//       )}
+
+//       {errors[id] && (
+//         <p className="text-sm text-red-500 mt-1">
+//           {errors[id]?.message?.toString()}
+//         </p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default InputImage;
 "use client";
 import React, { useEffect, useState } from "react";
 import {
@@ -118,18 +262,13 @@ const InputImage = <T extends FieldValues>({
   const selectedFile = watch(id);
 
   useEffect(() => {
-    // 기본 이미지 보여주기 (edit 시)
     if (defaultImageUrl) {
       setPreviewUrl(defaultImageUrl);
     }
   }, [defaultImageUrl]);
 
   useEffect(() => {
-    if (
-      mode === "upload" &&
-      selectedFile &&
-      typeof selectedFile[0]?.name === "string"
-    ) {
+    if (mode === "upload" && selectedFile && typeof selectedFile[0]?.name === "string") {
       const file = selectedFile[0];
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -144,38 +283,37 @@ const InputImage = <T extends FieldValues>({
   };
 
   return (
-    <div className="mb-4">
-      {showLabel && <label className="block font-semibold mb-1">{label}</label>}
+    <div className="mb-6">
+      {showLabel && <label className="block text-lg font-semibold mb-3">{label}</label>}
 
-      <div className="flex gap-4 mb-2">
-        <label className="text-sm">
-          <input
-            type="radio"
-            value="upload"
-            checked={mode === "upload"}
-            onChange={() => {
-              setMode("upload");
-              setValue(id, null as any); // 기존 URL 값 초기화
-              setPreviewUrl(null);
-            }}
-            className="mr-1"
-          />
+      <div className="flex gap-4 mb-4">
+        <button
+          type="button"
+          onClick={() => {
+            setMode("upload");
+            setValue(id, null as any);
+            setPreviewUrl(null);
+          }}
+          className={`px-4 py-2 rounded-md text-sm ${
+            mode === "upload" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
+          }`}
+        >
           파일 업로드
-        </label>
-        <label className="text-sm">
-          <input
-            type="radio"
-            value="url"
-            checked={mode === "url"}
-            onChange={() => {
-              setMode("url");
-              setValue(id, "" as any); // 파일 초기화
-              setPreviewUrl(null);
-            }}
-            className="mr-1"
-          />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setMode("url");
+            setValue(id, "" as any);
+            setPreviewUrl(null);
+          }}
+          className={`px-4 py-2 rounded-md text-sm ${
+            mode === "url" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
+          }`}
+        >
           이미지 URL
-        </label>
+        </button>
       </div>
 
       {mode === "upload" ? (
@@ -187,31 +325,32 @@ const InputImage = <T extends FieldValues>({
           {...register(id, {
             required: required && `${label}은(는) 필수입니다`,
           })}
-          className={`w-full border px-3 py-2 rounded ${
+          className={`w-full border px-4 py-2 rounded-md focus:outline-none ${
             errors[id] ? "border-red-500" : "border-gray-300"
           }`}
         />
       ) : (
         <input
           type="text"
-          placeholder="https://example.com/icon.svg"
+          placeholder="https://example.com/image.png"
           onChange={handleUrlChange}
-          className={`w-full border px-3 py-2 rounded ${
+          disabled={disabled}
+          className={`w-full border px-4 py-2 rounded-md focus:outline-none ${
             errors[id] ? "border-red-500" : "border-gray-300"
           }`}
         />
       )}
 
       {preview && previewUrl && (
-        <div className="mt-2">
-          <img src={previewUrl} alt="preview" width={100} />
+        <div className="mt-4">
+          <div className="border rounded-md p-2 w-[120px] h-[120px] flex items-center justify-center overflow-hidden bg-gray-50">
+            <img src={previewUrl} alt="preview" className="object-contain w-full h-full" />
+          </div>
         </div>
       )}
 
       {errors[id] && (
-        <p className="text-sm text-red-500 mt-1">
-          {errors[id]?.message?.toString()}
-        </p>
+        <p className="text-sm text-red-500 mt-2">{errors[id]?.message?.toString()}</p>
       )}
     </div>
   );

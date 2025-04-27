@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+
 interface InputRangeProps {
   id: string;
   label: string;
-
   disabled?: boolean;
   required?: boolean;
   min?: number;
@@ -29,32 +30,36 @@ const InputRange = ({
   value,
 }: InputRangeProps) => {
   return (
-    <div className="flex items-center mb-4 w-[30%]">
-      <label
-        htmlFor={id}
-        className={`${showLabel ? "block mb-1 font-semibold text" : "hidden"}`}
-      >
-        {`${label} : `}
-      </label>
-      <input
-        id={id}
-        type="range"
-        disabled={disabled}
-        defaultValue={defaultValue}
-        min={min}
-        max={max}
-        {...register(id, {
-          required: required && `${label}은(는) 필수입니다`,
-        })}
-        className={` border px-3 py-2 rounded ${
-          errors[id] ? "border-red-500" : "border-gray-300"
-        }`}
-      />
-      <p>{value}</p>
+    <div className="mb-6 w-full">
+      {showLabel && (
+        <label htmlFor={id} className="block text-lg font-semibold mb-2">
+          {label}
+        </label>
+      )}
+
+      <div className="flex items-center gap-4">
+        <input
+          id={id}
+          type="range"
+          disabled={disabled}
+          defaultValue={defaultValue}
+          min={min}
+          max={max}
+          {...register(id, {
+            required: required && `${label}은(는) 필수입니다`,
+          })}
+          className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer ${
+            errors[id] ? "border-red-500" : "border-gray-300"
+          }`}
+        />
+
+        <div className="min-w-[40px] text-center text-sm font-medium text-gray-700">
+          {value}
+        </div>
+      </div>
+
       {errors[id] && (
-        <p className="text-sm text-red-500 mt-1">
-          {errors[id]?.message?.toString()}
-        </p>
+        <p className="text-sm text-red-500 mt-2">{errors[id]?.message?.toString()}</p>
       )}
     </div>
   );

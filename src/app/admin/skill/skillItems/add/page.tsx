@@ -49,7 +49,6 @@ const AddSkill = () => {
         icon: secureUrl,
       });
 
-      console.log("Skill 등록 성공", res.data);
       alert("Skill 등록 성공");
       router.push("/skills");
     } catch (error) {

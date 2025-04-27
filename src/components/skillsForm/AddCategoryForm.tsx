@@ -19,7 +19,6 @@ const AddCategoryForm = ({ onSuccess, onCancel }: AddCategoryFormProps) => {
   const onSubmit = async (req: any) => {
     try {
       const { data } = await axios.post("/api/skill/category", req);
-      console.log(data);
       onSuccess();
     } catch (error) {
       console.error(error);

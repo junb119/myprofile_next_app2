@@ -32,7 +32,7 @@ const EditSkill = () => {
         reset(data);
         setDefaultImageUrl(data.icon);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchData();

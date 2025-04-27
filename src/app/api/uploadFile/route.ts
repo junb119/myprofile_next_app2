@@ -56,7 +56,6 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File;
     const rawPath = formData.get("subPath") as string; // ex: "about/profile"
     const publicId = formData.get("publicId") as string | null; // (선택) 덮어쓰기용 id
-    console.log("🧩 publicId =", publicId);
 
     if (!file || !rawPath) {
       return NextResponse.json(

@@ -51,7 +51,7 @@ const EditPortfolio = () => {
         );
         setValue("detail", data.detail);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchData();

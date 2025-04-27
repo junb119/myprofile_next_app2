@@ -19,7 +19,6 @@ export async function POST(request: Request) {
 
   const body = await request.json();
   const { name, icon, level, description, categoryId } = body;
-  console.log("skill 데이터 추가", body);
   try {
     const skill = await prisma.skill.create({
       data: {

@@ -14,7 +14,6 @@ export default function Home() {
     "api/about",
     fetcher
   );
-  console.log("👉 현재 연결된 DB URL:", process.env.DATABASE_URL);
 
   const { isAdmin } = useAdminSession();
   if (isLoadingAbout) return <Loader />;

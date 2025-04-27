@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     github,
     path,
   } = body;
-  console.log("portfolio 데이터 추가", body);
+
   try {
     const portfolio = await prisma.portfolio.create({
       data: {

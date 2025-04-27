@@ -23,7 +23,7 @@ const EditCategoryList = () => {
         const { data } = await axios.get("/api/skill/category");
         setSkillCategory(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchData();

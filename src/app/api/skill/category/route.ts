@@ -54,12 +54,10 @@ export async function PATCH(request: Request) {
 
   try {
     const body = await request.json();
-    console.log("패치 요청 바디: ", body);
 
     const updatePromises = Object.entries(body)
       .filter(([id]) => id !== "new")
       .map(([id, name]) => {
-        console.log("업데이트 항목:", { id, name }); // 추가
 
         return prisma.skillCategory.update({
           where: { id: String(id) },

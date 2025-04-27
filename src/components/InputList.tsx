@@ -47,8 +47,6 @@ const InputList: React.FC<InputListProps> = ({
   useEffect(() => {
     const values = getValues(id) || [];
     setItems(values);
-    console.log("items :", items);
-    console.log("values :", values);
   }, [getValues, id]);
 
   return (

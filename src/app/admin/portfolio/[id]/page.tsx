@@ -90,32 +90,91 @@ const EditPortfolio = () => {
     }
   };
 
-  const handleEditorImageUpload = async (files: any, info: any, uploadHandler: any) => {
+  // const handleEditorImageUpload = async (files: any, info: any, uploadHandler: any) => {
+  //   const file = files?.[0];
+  //   if (!file || typeof uploadHandler !== "function") {
+  //     console.warn("❗uploadHandler가 정의되지 않았거나 파일 없음");
+  //     return true;
+  //   }
+  //   setIsUploading(true);
+
+  //   if (file.size > 10 * 1024 * 1024) {
+  //     uploadHandler({
+  //       errorMessage: "10MB 이상 파일은 업로드할 수 없습니다.",
+  //     });
+  //     setIsUploading(false);
+  //     return false;
+  //   }
+
+  //   const formData = new FormData();
+  //   const publicId = `portfolio/detail/misc/${uuidv4()}`;
+  //   formData.append("file", file);
+  //   formData.append("subPath", "portfolio/detail");
+  //   formData.append("publicId", publicId);
+
+  //   try {
+  //     const {
+  //       data: { secure_url },
+  //     } = await axios.post("/api/uploadFile", formData);
+
+  //     if (secure_url) {
+  //       uploadHandler({
+  //         result: [
+  //           {
+  //             url: secure_url,
+  //             name: file.name,
+  //             size: file.size,
+  //           },
+  //         ],
+  //       });
+  //     }
+  //     setIsUploading(false);
+  //     return false;
+  //   } catch (error) {
+  //     console.error("에디터 이미지 업로드 실패", error);
+  //     if (typeof uploadHandler === "function") {
+  //       uploadHandler({
+  //         errorMessage: "이미지 업로드 실패. 네트워크를 확인해주세요.",
+  //       });
+  //     }
+  //     setIsUploading(false);
+  //     return false;
+  //   }
+  // };
+  const handleEditorImageUpload = async (
+    files: any,
+    info: any,
+    uploadHandler: any
+  ) => {
     const file = files?.[0];
     if (!file || typeof uploadHandler !== "function") {
       console.warn("❗uploadHandler가 정의되지 않았거나 파일 없음");
       return true;
     }
-    setIsUploading(true);
+
+    setUploadingCount((prev) => prev + 1);
 
     if (file.size > 10 * 1024 * 1024) {
       uploadHandler({
         errorMessage: "10MB 이상 파일은 업로드할 수 없습니다.",
       });
-      setIsUploading(false);
+      setUploadingCount((prev) => prev - 1);
       return false;
     }
 
     const formData = new FormData();
-    const publicId = `portfolio/detail/misc/${uuidv4()}`;
     formData.append("file", file);
-    formData.append("subPath", "portfolio/detail");
-    formData.append("publicId", publicId);
+    formData.append("upload_preset", "portfolio_detail_image"); // ⚠️ 너의 preset 이름으로 교체
+    formData.append("folder", "portfolio/detail"); // Cloudinary 내 업로드 경로
+    formData.append("public_id", `portfolio_detail_${uuidv4()}`);
 
     try {
-      const {
-        data: { secure_url },
-      } = await axios.post("/api/uploadFile", formData);
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      );
+
+      const { secure_url } = res.data;
 
       if (secure_url) {
         uploadHandler({
@@ -128,25 +187,26 @@ const EditPortfolio = () => {
           ],
         });
       }
-      setIsUploading(false);
+
       return false;
     } catch (error) {
-      console.error("에디터 이미지 업로드 실패", error);
-      if (typeof uploadHandler === "function") {
-        uploadHandler({
-          errorMessage: "이미지 업로드 실패. 네트워크를 확인해주세요.",
-        });
-      }
-      setIsUploading(false);
+      console.error("❌ Cloudinary 직접 업로드 실패", error);
+      uploadHandler({
+        errorMessage: "이미지 업로드 실패. 용량 또는 네트워크를 확인해주세요.",
+      });
       return false;
+    } finally {
+      setUploadingCount((prev) => prev - 1);
     }
   };
-
   if (loading) return <Loader />;
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
-      <form onSubmit={handleSubmit(handleEditSubmit)} className="bg-white p-8 rounded-lg shadow space-y-6">
+      <form
+        onSubmit={handleSubmit(handleEditSubmit)}
+        className="bg-white p-8 rounded-lg shadow space-y-6"
+      >
         <InputText
           id="title"
           label="포트폴리오 이름"

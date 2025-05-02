@@ -127,10 +127,14 @@ const AddPortfolio = () => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "portfolio_detail_image"); // ⚠️ 너의 preset 이름으로 교체
-    formData.append("folder", "portfolio/detail"); // Cloudinary 내 업로드 경로
+    formData.append("upload_preset", "portfolio_detail_image"); 
+    // formData.append("folder", "portfolio/detail"); 
     formData.append("public_id", `portfolio_detail_${uuidv4()}`);
-
+    console.log("🚀 업로드 시작", {
+      file,
+      preset: "portfolio_detail_image",
+      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    });
     try {
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, 

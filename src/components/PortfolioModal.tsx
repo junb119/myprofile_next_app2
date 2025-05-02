@@ -102,7 +102,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
 
           {/* 상세 설명 HTML */}
           <div
-            className="prose max-w-none prose-zinc border-t border-zinc-700 pt-10 text-zinc-300 prose-strong:text-white"
+            className="prose max-w-none prose-zinc border-t border-zinc-700 pt-10 text-zinc-300 prose-strong:text-white prose-h1:text-white prose-h2:text-white prose-h3:text-white prose-h4:text-white prose-p:text-white prose-li:text-white"
             dangerouslySetInnerHTML={{ __html: portfolio.detail }}
           />
         </div>

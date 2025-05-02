@@ -59,6 +59,9 @@ export async function PATCH(
     roleIds,
   } = await req.json();
   const id = (await context.params).id;
+  console.log("detail 길이:", detail.length);
+  console.log("base64 포함됨?", detail.includes("data:image"));
+
   try {
     const portfolioUpdate = await prisma.portfolio.update({
       where: { id },

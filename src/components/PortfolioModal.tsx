@@ -22,12 +22,12 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
       onClick={onClose} // 바깥 클릭 시 닫힘
     >
       <div
-        className="bg-black rounded-xl shadow-[0_0_20px_rgb(161,161,170)] w-full sm:max-w-[70vw] max-w-[80vw] max-h-[90vh] overflow-y-auto relative"
+        className="bg-white bg-opacity-100 rounded-xl shadow-[0_0_20px_rgb(161,161,170)] w-full sm:max-w-[70vw] max-w-[80vw] max-h-[90vh] overflow-y-auto relative"
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫힘 방지
       >
         {/* 닫기 버튼 */}
         <button
-          className="fixed top-6 right-6 z-50 bg-yellow-100 text-zinc-700 hover:text-zinc-900 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow-md transition"
+          className="fixed top-6 right-6 z-50 bg-yellow-200 text-zinc-900 hover:text-zinc-700 hover:bg-yellow-100 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow-md transition"
           onClick={onClose}
         >
           X
@@ -44,14 +44,14 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
         </div>
 
         {/* 본문 */}
-        <div className="p-6 space-y-4 text-zinc-400">
-          <h2 className="text-3xl font-bold text-cyan-100">
+        <div className="p-6 space-y-4 text-zinc-700">
+          <h2 className="text-3xl font-bold text-zinc-900">
             {portfolio.title}
           </h2>
-          <p className="text-sm text-zinc-100">{portfolio.description}</p>
+          <p className="text-sm text-zinc-700">{portfolio.description}</p>
 
           {/* 상세 정보 */}
-          <ul className="text-sm text-zinc-100 space-y-1 pt-4 border-t border-zinc-700">
+          <ul className="text-sm text-zinc-700 space-y-1 pt-4 border-t border-zinc-700">
             <li>
               <span className="font-medium">기간:</span> {portfolio.period}
             </li>
@@ -102,7 +102,8 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
 
           {/* 상세 설명 HTML */}
           <div
-            className="prose max-w-none prose-zinc border-t border-zinc-700 pt-10 text-zinc-300 prose-strong:text-white prose-h1:text-white prose-h2:text-white prose-h3:text-white prose-h4:text-white prose-p:text-white prose-li:text-white"
+            // className="prose prose-invert max-w-none  border-t prose-zinc border-zinc-700 pt-10 "
+            className="prose max-w-none  border-t pros- pt-10"
             dangerouslySetInnerHTML={{ __html: portfolio.detail }}
           />
         </div>

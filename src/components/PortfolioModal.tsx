@@ -44,14 +44,16 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
         </div>
 
         {/* 본문 */}
-        <div className="p-6 space-y-4 text-zinc-700">
-          <h2 className="text-3xl font-bold text-zinc-900">
-            {portfolio.title}
-          </h2>
-          <p className="text-sm text-zinc-700">{portfolio.description}</p>
+        {/* <div className="p-6 space-y-4 text-zinc-700"> */}
+        <div className="p-6 space-y-4 ">
+          {/* <h2 className="text-3xl font-bold text-zinc-900"> */}
+          <h2 className="text-3xl font-bold">{portfolio.title}</h2>
+          {/* <p className="text-sm text-zinc-700">{portfolio.description}</p> */}
+          <p className="text-sm ">{portfolio.description}</p>
 
           {/* 상세 정보 */}
-          <ul className="text-sm text-zinc-700 space-y-1 pt-4 border-t border-zinc-700">
+          {/* <ul className="text-sm text-zinc-700 space-y-1 pt-4 border-t border-zinc-700"> */}
+          <ul className="text-sm space-y-1 pt-4 border-t ">
             <li>
               <span className="font-medium">기간:</span> {portfolio.period}
             </li>
@@ -103,7 +105,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
           {/* 상세 설명 HTML */}
           <div
             // className="prose prose-invert max-w-none  border-t prose-zinc border-zinc-700 pt-10 "
-            className="prose max-w-none  border-t pros- pt-10"
+            className="prose max-w-none border-t pt-10"
             dangerouslySetInnerHTML={{ __html: portfolio.detail }}
           />
         </div>

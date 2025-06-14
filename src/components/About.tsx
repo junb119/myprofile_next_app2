@@ -11,7 +11,7 @@ interface AboutProps {
   animate2: AnimationControls
 }
 const About = ({aboutData , animate1, animate2}:AboutProps) => {
-  const isAdmin = useAdminSession()
+  const {isAdmin} = useAdminSession()
   return (
     <div>
       {/* edit 버튼 */}

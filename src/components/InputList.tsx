@@ -16,6 +16,7 @@ interface InputListProps {
   setValue: UseFormSetValue<any>;
   getValues: UseFormGetValues<any>;
   errors: FieldErrors;
+  defaultValue?: string[];
 }
 
 const InputList: React.FC<InputListProps> = ({
@@ -25,10 +26,15 @@ const InputList: React.FC<InputListProps> = ({
   getValues,
   register,
   errors,
+  defaultValue,
 }) => {
   const initial = getValues(id) || [];
   const [items, setItems] = useState<string[]>(initial);
   const [inputValue, setInputValue] = useState("");
+  useEffect(() => {
+    const values = defaultValue ?? getValues(id) ?? [];
+    setItems(values);
+  }, [defaultValue, getValues, id]);
 
   const handleAdd = () => {
     const value = inputValue.trim();
@@ -97,7 +103,7 @@ const InputList: React.FC<InputListProps> = ({
       )}
 
       {/* hidden input for react-hook-form */}
-      <input type="hidden" {...register(id, { required: true })} />
+      <input type="hidden" {...register(id)} />
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Container from "@/components/Container";
 import SessionWrapper from "@/components/SessionWrapper";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "JunB의 준비된 이야기 | 프론트엔드 개발자 포트폴리오",
@@ -48,10 +47,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen">
         <SessionWrapper>
-          <Navbar />
-          <Container>{children}</Container>
+          <CustomCursor />
+          {children}
         </SessionWrapper>
       </body>
     </html>

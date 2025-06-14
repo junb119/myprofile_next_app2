@@ -1,0 +1,24 @@
+.fade-wrapper {
+  position: relative;
+  height: 2em;
+  overflow: hidden;
+}
+
+.fade-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: opacity 3s ease-in-out, transform 3s ease-in-out;
+}
+
+.fade-out {
+  z-index: 0;
+  opacity: 0;
+  transform: translateY(50%); /* 아래로 사라짐 */
+}
+
+.fade-in {
+  z-index: 10;
+  opacity: 1;
+  transform: translateY(-50%); /* 위에서 등장 */
+}

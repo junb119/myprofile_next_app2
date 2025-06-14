@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import InputText from "@/components/InputText";
 import InputList from "@/components/InputList";
 import InputImage from "@/components/InputImage";
-import { AboutMe } from "@prisma/client";
+// import { AboutMe } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Textarea from "@/components/Textarea";

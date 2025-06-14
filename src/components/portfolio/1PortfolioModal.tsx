@@ -1,7 +1,7 @@
 import { Portfolio } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import Tags from "./Tags";
+import Tags from "../Tags";
 interface PortfolioWithRelations extends Portfolio {
   Skills: { name: string; icon: string }[];
   Role: { name: string }[];

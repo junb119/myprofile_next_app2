@@ -33,7 +33,7 @@ const EditCategoryList = () => {
     const { new: _, ...updateData } = data;
     try {
       await axios.patch("/api/skill/category", updateData);
-      router.push("/skills");
+      router.push("/");
     } catch (error) {
       console.error(error);
     }

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const { authorized, response } = await requireAdmin();
   if (!authorized) return response;
-  
+
   const body = await request.json();
   const {
     title,
@@ -18,6 +18,8 @@ export async function POST(request: Request) {
     thumb,
     github,
     path,
+    attribute,
+    modalTags,
   } = body;
 
   try {
@@ -33,6 +35,8 @@ export async function POST(request: Request) {
         thumb,
         github,
         path,
+        modalTags,
+        attribute,
       },
     });
     return NextResponse.json(portfolio, { status: 200 });

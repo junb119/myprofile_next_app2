@@ -57,7 +57,7 @@ const EditSkill = () => {
 
       await axios.patch(`/api/skill/items/${id}`, formData);
       alert("스킬 수정 성공");
-      router.push("/skills");
+      router.push("/");
     } catch (error) {
       console.error(error);
       alert("수정 실패!");

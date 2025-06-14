@@ -12,6 +12,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "@/components/Loader";
+import InputList from "@/components/InputList";
+
 
 const AddPortfolio = () => {
   const [uploadingCount, setUploadingCount] = useState(0);
@@ -20,6 +22,7 @@ const AddPortfolio = () => {
     formState: { errors },
     handleSubmit,
     setValue,
+    getValues,
     watch,
   } = useForm({
     mode: "onChange",
@@ -48,7 +51,7 @@ const AddPortfolio = () => {
       });
 
       alert("Portfolio 등록 성공");
-      router.push("/portfolio");
+      router.push("/");
     } catch (error) {
       console.error(error);
       alert("Portfolio 등록 실패!");
@@ -127,8 +130,8 @@ const AddPortfolio = () => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "portfolio_detail_image"); 
-    // formData.append("folder", "portfolio/detail"); 
+    formData.append("upload_preset", "portfolio_detail_image");
+    // formData.append("folder", "portfolio/detail");
     formData.append("public_id", `portfolio_detail_${uuidv4()}`);
     console.log("🚀 업로드 시작", {
       file,
@@ -137,7 +140,7 @@ const AddPortfolio = () => {
     });
     try {
       const res = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, 
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
         formData
       );
 
@@ -210,6 +213,14 @@ const AddPortfolio = () => {
           label="역할"
           watch={watch}
         />
+        <InputList
+          id="modalTags"
+          label="태그"
+          register={register}
+          setValue={setValue}
+          getValues={getValues}
+          errors={errors}
+        />
         <TextareaField
           id="description"
           label="한 줄 설명"
@@ -228,11 +239,18 @@ const AddPortfolio = () => {
           watch={watch}
         />
         <InputText
+          id="attribute"
+          label="기여도"
+          register={register}
+          errors={errors}
+        />
+        <InputText
           id="github"
           label="깃허브 주소"
           register={register}
           errors={errors}
         />
+
         <InputText
           id="path"
           label="프로젝트 주소"

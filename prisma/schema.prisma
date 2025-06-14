@@ -68,6 +68,10 @@ model Portfolio {
   updatedAt   DateTime @updatedAt
   Role        Role[]   @relation("Portfolio_Role")
   roleId      String?
+  modalImages String[]
+  tags        String[]
+  modalTags   String[]
+  attribute   String?
 }
 
 model Role {

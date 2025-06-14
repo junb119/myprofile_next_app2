@@ -50,7 +50,7 @@ const AddSkill = () => {
       });
 
       alert("Skill 등록 성공");
-      router.push("/skills");
+      router.push("/");
     } catch (error) {
       console.error(error);
       alert("Skill 등록 실패!");
@@ -61,8 +61,16 @@ const AddSkill = () => {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded-lg shadow space-y-6">
-        <InputText id="name" label="스킬명" register={register} errors={errors} />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white p-8 rounded-lg shadow space-y-6"
+      >
+        <InputText
+          id="name"
+          label="스킬명"
+          register={register}
+          errors={errors}
+        />
 
         <InputImage
           id="icon"

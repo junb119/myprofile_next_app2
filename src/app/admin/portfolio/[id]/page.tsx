@@ -12,6 +12,21 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Loader from "@/components/Loader";
 import { v4 as uuidv4 } from "uuid";
+import InputList from "@/components/InputList";
+type PortfolioFormValues = {
+  title: string;
+  period: string;
+  skillIds: string[];
+  roleIds: string[];
+  members: string;
+  description: string;
+  detail: string;
+  thumb: any;
+  github?: string;
+  path?: string;
+  modalTags: string[];
+  attribute?: string;
+};
 
 const EditPortfolio = () => {
   const [uploadingCount, setUploadingCount] = useState(0);
@@ -24,9 +39,12 @@ const EditPortfolio = () => {
     getValues,
     reset,
     watch,
-  } = useForm({
+  } = useForm<PortfolioFormValues>({
     mode: "onChange",
     shouldUnregister: false,
+    defaultValues: {
+      modalTags: [], // ✅ 추가
+    },
   });
 
   const { id } = useParams();
@@ -83,7 +101,7 @@ const EditPortfolio = () => {
       });
 
       alert("Portfolio 수정 성공");
-      router.push("/portfolio");
+      router.push("/");
     } catch (error) {
       console.error(error);
       alert("Portfolio 수정 실패!");
@@ -242,6 +260,15 @@ const EditPortfolio = () => {
           setValue={setValue}
           label="역할"
         />
+        <InputList
+          id="modalTags"
+          label="태그"
+          register={register}
+          setValue={setValue}
+          getValues={getValues}
+          errors={errors}
+          defaultValue={watch("modalTags")} // ✅ 이게 핵심
+        />
         <TextareaField
           id="description"
           label="한 줄 설명"
@@ -258,6 +285,12 @@ const EditPortfolio = () => {
           preview
           setValue={setValue}
           watch={watch}
+        />{" "}
+        <InputText
+          id="attribute"
+          label="기여도"
+          register={register}
+          errors={errors}
         />
         <InputText
           id="github"
@@ -271,7 +304,6 @@ const EditPortfolio = () => {
           register={register}
           errors={errors}
         />
-
         <div className="space-y-2">
           <label className="block text-lg font-semibold mb-1">상세 내용</label>
           {watch("detail") !== undefined && (
@@ -284,7 +316,6 @@ const EditPortfolio = () => {
             />
           )}
         </div>
-
         <div className="flex justify-center">
           <button
             type="submit"

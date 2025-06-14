@@ -84,9 +84,9 @@ const CategoryList = ({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-      <div>
+      <div className="">
         {/* ver1 */}
-        <ul className="flex flex-wrap justify-center gap-2">
+        <ul className="grid grid-cols-2 gap-2  p-2 rounded-xl min-w-[327px] lg:min-w-full lg:grid-cols-4">
           {categories
             .sort((a, b) => {
               let diff =
@@ -100,13 +100,14 @@ const CategoryList = ({
               return diff;
             })
             .map((category) => (
-              <li key={category.id}>
+              <li key={category.id} className="text-center">
                 <button
-                  className={`px-4 py-2 text-sm rounded-full border transition 
+                  className={`px-4 py-2 text-sm rounded-full  transition font-semibold
+                    
                   ${
                     category.id === selectedCategoryId
-                      ? "bg-cyan-500 text-white font-semibold shadow"
-                      : "bg-white text-zinc-700 hover:bg-cyan-100 font-semibold"
+                      ? " text-white  "
+                      : "text-zinc-400  hover:text-cyan-700 "
                   }`}
                   onClick={() => setSelectedCategoryId(category.id)}
                 >

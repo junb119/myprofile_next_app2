@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Input from "../InputText";
+import Input from "../../InputText";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 interface AddCategoryFormProps {

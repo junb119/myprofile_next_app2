@@ -196,10 +196,10 @@ const SkillList = ({ skills, selectedCategoryId }: SkillListProps) => {
   const { isAdmin } = useAdminSession();
 
   const filteredSkills = skills?.filter(
-    (skill: any) => skill.categoryId === selectedCategoryId
+    (skill: Skill) => skill.categoryId === selectedCategoryId
   );
 
-  const handleSkillDelete = async (id: any) => {
+  const handleSkillDelete = async (id: string) => {
     const isDelete = confirm("정말 삭제하시겠습니까?");
     try {
       if (isDelete) {
@@ -231,45 +231,47 @@ const SkillList = ({ skills, selectedCategoryId }: SkillListProps) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.3 }}
-        className="space-y-4 mt-6 max-w-3xl mx-auto"
+        className="space-y-4 mt-6 max-w-3xl mx-auto "
       >
-        {filteredSkills.map((skill: any, index: any) => (
+        {filteredSkills.map((skill: Skill, index: number) => (
           <motion.li
             key={skill.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2, delay: index * 0.05 }}
-            className="flex items-start gap-4 border rounded-xl bg-white p-4 shadow-sm sm:mx-0 mx-5 hover:shadow-md transition"
+            className="min-w-[327px] w-full flex gap-4 rounded-xl bg-[#373737] p-4"
           >
             <Image
               src={skill.icon}
               alt={skill.name}
               width={50}
               height={50}
-              className="rounded bg-white w-12 h-12 object-contain"
+              className="rounded-xl bg-white w-12 h-12 object-contain"
             />
 
             <div className="flex-grow space-y-1">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-zinc-800">
+                <h3 className="text-sm font-semibold text-white">
                   {skill.name}
                 </h3>
-                <span className="text-xs text-amber-600">
+                <span className="text-xs text-amber-400">
                   {getLevelText(skill.level)}
                 </span>
               </div>
 
-              <div className="w-full bg-zinc-200 rounded-full h-2">
+              <div className="w-full bg-zinc-800 rounded-full h-2">
                 <motion.div
-                  className="bg-amber-400 h-2 rounded-full"
+                  className="bg-white h-2 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${skill.level * 10}%` }}
                   transition={{ duration: 0.7, ease: "easeInOut" }}
                 />
               </div>
 
-              <p className="text-sm text-zinc-500 mt-1">{skill.description}</p>
+              <p className="hidden sm:block  text-sm text-zinc-400 mt-1">
+                {skill.description}
+              </p>
             </div>
             {isAdmin && (
               <div className="flex flex-col items-end gap-1">

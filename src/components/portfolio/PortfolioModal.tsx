@@ -140,13 +140,13 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
         {/* 모달 내용 */}
         <div className="flex flex-col  w-full  ">
           {/* 이미지 영역 */}
-          <div className="sticky top-0 w-full aspect-[19/10] lg:relative lg:flex lg:items-center lg:justify-center bg-[rgb(15,23,42)]/90">
-            <div className="relative w-full h-full lg:w-[90%] lg:h-[90%] lg:rounded-lg lg:border-8 lg:border-zinc-400 ">
+          <div className="sticky top-0 w-full aspect-[19/10] sm:relative  lg:relative lg:flex lg:items-center lg:justify-center bg-[rgb(15,23,42)]/90">
+            <div className="relative w-full h-full  lg:w-[90%] lg:h-[90%] lg:rounded-lg lg:border-8 lg:border-zinc-400 ">
               <Image
                 src={portfolio.thumb}
                 alt={portfolio.title}
                 fill
-                className="object-cover"
+                className="object-cover "
                 // sizes=""
                 priority
               />

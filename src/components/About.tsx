@@ -61,9 +61,7 @@ const About = ({aboutData , animate1, animate2}:AboutProps) => {
             <h3 className="text-lg font-semibold mb-2">
               Q. 프로젝트에서 가장 중요하게 보는 요소
             </h3>
-            <p className="indent-2"> <span className='bg-zinc-900 font-bold'>첫째는 사용자 경험입니다.</span>
-
-사용 중 거슬리거나 불편한 요소를 최대한 줄이고, 시각적인 몰입감이나 사용 편의성과 같은 긍정적인 경험을 확대하는 것을 우선시합니다.
+            <p className="indent-2"> <span className='bg-zinc-900 font-bold'>첫째는 사용자 경험입니다.</span> 사용 중 거슬리거나 불편한 요소를 최대한 줄이고, 시각적인 몰입감이나 사용 편의성과 같은 긍정적인 경험을 확대하는 것을 우선시합니다.
 
             </p>
             <p className="indent-2"> <span className='bg-zinc-900 font-bold'>둘째는 유지보수와 협업 효율성입니다.</span> 기능 추가나 확장이 필요할 때를 대비해 처음부터 구조를 유연하게 설계하고, 로직 흐름이나 코드의 명확성을 유지하려고 노력합니다.

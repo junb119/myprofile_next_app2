@@ -76,14 +76,14 @@ const Portfolio = ({
           {portfolios.map((pf) => (
             <li
               key={pf.id}
-              className="cursor-pointer border-t border-b px-4 border-transparent hover:border-white py-4 box-border transition-colors duration-300 lg:flex lg:gap-4   lg:items-start "
+              className="cursor-pointer  px-4 border-transparent hover:bg-slate-800 py-4 box-border transition-colors duration-300 lg:flex lg:gap-4   lg:items-start "
               onClick={() => {
                 onSelect(pf); // 선택한 포트폴리오
               }}
             >
               {/* 텍스트영역 */}
               <div className="lg:order-2">
-                <h3 className="text-[20px] lg:leading-[0.9]">{pf.title}</h3>
+                <h3 className="text-[20px] lg:leading-none">{pf.title}</h3>
                 {/* <span className="text-slate-400 text-xs">{pf.period}</span>
                 <span className="text-slate-400 text-xs ml-2">
                   {pf.members}명

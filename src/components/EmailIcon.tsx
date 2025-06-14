@@ -24,7 +24,7 @@ export default function EmailIcon() {
         className="cursor-pointer hover:opacity-80 transition"
       />
       {copied && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded shadow-lg text-sm z-50 whitespace-nowrap">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-700 text-white px-4 py-2 rounded shadow-lg text-sm z-50 whitespace-nowrap">
           이메일이 복사되었습니다!
         </div>
       )}

@@ -118,7 +118,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
       onClick={onClose}
     >
       <div
-        className="modal-scroll-container relative bg-white text-black w-full h-screen lg:w-[70%] lg:h-[100%] overflow-y-auto hide-scrollbar "
+        className="modal-scroll-container relative bg-white text-black w-full h-screen md:w-[70%] lg:h-[100%] overflow-y-auto hide-scrollbar "
         onClick={(e) => e.stopPropagation()}
       >
         {/* 닫기 버튼 */}
@@ -140,7 +140,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
         {/* 모달 내용 */}
         <div className="flex flex-col  w-full  ">
           {/* 이미지 영역 */}
-          <div className="sticky top-0 w-full aspect-[19/10] sm:relative  lg:relative lg:flex lg:items-center lg:justify-center bg-[rgb(15,23,42)]/90">
+          <div className="sticky top-0 w-full aspect-[19/10] sm:relative  lg:flex lg:items-center lg:justify-center bg-[rgb(15,23,42)]/90">
             <div className="relative w-full h-full  lg:w-[90%] lg:h-[90%] lg:rounded-lg lg:border-8 lg:border-zinc-400 ">
               <Image
                 src={portfolio.thumb}

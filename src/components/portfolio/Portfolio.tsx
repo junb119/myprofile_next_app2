@@ -108,7 +108,7 @@ const Portfolio = ({
                   alt="portfolio.jpg"
                   width={500}
                   height={500}
-                  className="aspect-video object-cover"
+                  className="aspect-video object-cover w-full"
                 />
               </div>
               {isAdmin && (

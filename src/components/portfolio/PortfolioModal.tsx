@@ -183,7 +183,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
                 <span>{portfolio.members}명</span>
               </div>
               {/* 인원 & 기여도 */}
-              <ul className="flex gap-2 justify-center text-xs lg:text-sm  my-4 flex-wrap">
+              <ul className="flex w-[70%]  gap-2 justify-center text-xs lg:text-sm  my-4 mx-auto flex-wrap">
                 {portfolio.Skills.map((skill) => (
                   <li
                     key={skill.name}

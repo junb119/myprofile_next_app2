@@ -229,6 +229,13 @@ const AddPortfolio = () => {
           required
           rows={2}
         />
+        <TextareaField
+          id="detailIntro"
+          label="모달용 소개"
+          register={register}
+          errors={errors}
+          rows={10}
+        />
         <InputImage
           id="thumb"
           label="썸네일"

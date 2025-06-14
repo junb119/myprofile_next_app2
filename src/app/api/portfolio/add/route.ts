@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     github,
     path,
     attribute,
-    modalTags,
+    modalTags,detailIntro
   } = body;
 
   try {
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
         github,
         path,
         modalTags,
-        attribute,
+        attribute,detailIntro
       },
     });
     return NextResponse.json(portfolio, { status: 200 });

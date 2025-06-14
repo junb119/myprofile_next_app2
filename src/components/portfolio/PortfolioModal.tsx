@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 // import Tags from "../Tags";
 import ScrollTopButton from "../ScrollTopButton";
+import Link from "next/link";
 interface PortfolioWithRelations extends Portfolio {
   Skills: { name: string; icon: string }[];
   Role: { name: string }[];
@@ -113,7 +114,7 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
     //   </div>
     // </div>
     <div
-      className="fixed inset-0 z-50 flex items-center lg:pt-10 justify-center bg-black bg-opacity-60  "
+      className="fixed inset-0 z-50 flex items-center lg:p-5 justify-center bg-black bg-opacity-60  "
       onClick={onClose}
     >
       <div
@@ -195,32 +196,34 @@ const PortfolioModal = ({ open, onClose, portfolio }: PortfolioModalProps) => {
 
               <div className="flex gap-4 justify-center mt-2 text-sm lg:mt-4 lg:text-lg">
                 {portfolio.github && (
-                  <a
+                  <Link
                     href={portfolio.github}
+                    target="_blank"
                     className="text-amber-200 border border-amber-200 p-2 lg:px-3 lg:py-2 flex justify-center items-center hover:border-black hover:text-black hover:bg-white transition"
                   >
                     GitHub
-                  </a>
+                  </Link>
                 )}
                 {portfolio.path && (
-                  <a
+                  <Link
                     href={portfolio.path}
+                    target="_blank"
                     className="text-amber-200 border border-amber-200 p-2 lg:px-3 lg:py-2  flex justify-center items-center hover:border-black hover:text-black hover:bg-white transition "
                   >
                     자세히 보기
-                  </a>
+                  </Link>
                 )}
               </div>
               {/* 소개 */}
             </div>
             {/* 본문 */}
-            <div className="text-center border-solid border-[#dcdcdc] py-10 px-4 border-b-[1px]">
-              {portfolio.description}
+            <div className="text-center border-solid border-[#dcdcdc] py-10 px-[5%] sm:px-[10%] md:px-[15%]  lg:px-[20%] border-b-[1px] whitespace-pre-wrap text-black">
+              {portfolio.detailIntro}
             </div>
             {/* 상세 설명 HTML */}
             <div
               // className="prose prose-invert max-w-none  border-t prose-zinc border-zinc-700 pt-10 "
-              className="prose max-w-none border-t pt-10 px-4"
+              className="prose max-w-none border-t py-10 px-[5%] sm:px-[10%] md:px-[10%]  lg:px-[15%]"
               dangerouslySetInnerHTML={{ __html: portfolio.detail }}
             />
           </div>

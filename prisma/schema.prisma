@@ -60,6 +60,7 @@ model Portfolio {
   tools       String[]
   members     String
   description String
+  detailIntro String?
   thumb       String
   detail      String
   github      String?

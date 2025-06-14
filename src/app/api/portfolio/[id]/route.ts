@@ -58,7 +58,7 @@ export async function PATCH(
     skillIds,
     roleIds,
     modalTags,
-    attribute,
+    attribute,detailIntro
   } = await req.json();
   const id = (await context.params).id;
   console.log("detail 길이:", detail.length);
@@ -77,7 +77,7 @@ export async function PATCH(
         github,
         path,
         modalTags,
-        attribute,
+        attribute,detailIntro,
         Skills: {
           set: skillIds.map((id: string) => ({ id })),
         },

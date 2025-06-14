@@ -40,7 +40,7 @@ const About = ({aboutData , animate1, animate2}:AboutProps) => {
             />
             {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1a1a1a]/80" /> */}
           </div>
-          <p className="mt-4 mb-10 break-words">{aboutData.bio}</p>
+          <p className="mt-4 mb-10 break-words text-center">{aboutData.bio}</p>
         </motion.div>
         {/* 인터뷰 */}
         <motion.ul initial={{ opacity: 0, y: 20 }} animate={animate2}>
